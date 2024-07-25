@@ -36,7 +36,7 @@ function Contact() {
         setMessage("");
         setIsSubmitted(true);
 
-        // Refresh the page after 1 second
+        // Refresh the page after 3 seconds
         setTimeout(() => {
           window.location.reload(); // Reload the page
         }, 3000); // Adjust delay as needed
@@ -53,7 +53,7 @@ function Contact() {
       <div className="container mx-auto text-center">
         <h1 className="text-5xl font-extrabold mb-4">Contact Me</h1>
         <h2 className="text-2xl font-semibold mb-4">
-          Let's Start a Project Together
+          Let&apos;s Start a Project Together
         </h2>
         <p className="text-md mb-8 text-gray-400">
           We are here to assist you with any queries you may have. Please feel

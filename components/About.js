@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import {
   FaEnvelope,
   FaPhone,
@@ -20,11 +21,15 @@ const About = () => {
         {/* Photo */}
         <div className="md:w-1/3 flex justify-center mb-8 md:mb-0">
           <div className="relative group">
-            <img
-              src="/myphoto.jpg"
-              alt="AK"
-              className="w-48 h-48 md:w-72 md:h-72 rounded-full border-4 border-gray-600 transition-transform duration-300 ease-in-out transform group-hover:scale-105 group-hover:shadow-2xl"
-            />
+            <div className="w-48 h-48 md:w-72 md:h-72 rounded-full border-4 border-gray-600 transition-transform duration-300 ease-in-out transform group-hover:scale-105 group-hover:shadow-2xl overflow-hidden">
+              <Image
+                src="/myphoto.jpg"
+                alt="AK"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-full"
+              />
+            </div>
             <div className="absolute inset-0 rounded-full border-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </div>
         </div>
