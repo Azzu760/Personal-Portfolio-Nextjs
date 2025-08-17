@@ -36,6 +36,8 @@ const Resume = () => {
   const qualRefs = useRef([]);
 
   useEffect(() => {
+    const refs = qualRefs.current;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -47,10 +49,10 @@ const Resume = () => {
       { threshold: 0.1 }
     );
 
-    qualRefs.current.forEach((ref) => ref && observer.observe(ref));
+    refs.forEach((ref) => ref && observer.observe(ref));
 
     return () => {
-      qualRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+      refs.forEach((ref) => ref && observer.unobserve(ref));
     };
   }, []);
 

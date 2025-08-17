@@ -44,9 +44,10 @@ function Contact() {
     }
   };
 
-  // Fade-in animation
+  // Fade-in animation with fixed ref cleanup
   const containerRef = useRef(null);
   useEffect(() => {
+    const currentRef = containerRef.current;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -57,9 +58,9 @@ function Contact() {
       },
       { threshold: 0.1 }
     );
-    if (containerRef.current) observer.observe(containerRef.current);
+    if (currentRef) observer.observe(currentRef);
     return () => {
-      if (containerRef.current) observer.unobserve(containerRef.current);
+      if (currentRef) observer.unobserve(currentRef);
     };
   }, []);
 
@@ -72,7 +73,7 @@ function Contact() {
         Contact Me
       </h1>
       <h2 className="text-2xl font-semibold mb-4">
-        Let's Start a Project Together
+        Let&apos;s Start a Project Together
       </h2>
       <p className="text-md mb-12 text-gray-400 text-center max-w-2xl">
         We are here to assist you with any queries you may have. Feel free to
@@ -201,7 +202,6 @@ function Contact() {
         </div>
       </div>
 
-      {/* Scroll Animations */}
       <style jsx>{`
         @keyframes fadeUp {
           0% {

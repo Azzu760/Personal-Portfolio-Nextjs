@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from "react";
+import Image from "next/image"; // ✅ Use Next.js Image
 import { FaGlobe, FaMobileAlt, FaEye } from "react-icons/fa";
 
 // Sample project data with tech stack
@@ -154,10 +156,12 @@ const Projects = () => {
               className="relative group rounded-3xl overflow-hidden border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] hover:shadow-[0_12px_40px_rgba(128,0,255,0.8)] transition-shadow duration-500"
             >
               <div className="relative w-full h-56 overflow-hidden rounded-t-3xl">
-                <img
+                <Image
                   src={project.imageUrl}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  priority
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <a

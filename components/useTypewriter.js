@@ -1,35 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const useTypewriter = (words, typingSpeed = 100, pauseDuration = 1000) => {
   const [text, setText] = useState("");
-  const [index, setIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [loop, setLoop] = useState(0);
+  const loopRef = useRef(0);
 
   useEffect(() => {
-    const handleType = () => {
-      const i = loop % words.length;
-      const fullText = words[i];
+    const currentIndex = loopRef.current % words.length;
+    const fullText = words[currentIndex];
 
-      setText(
+    const handleType = () => {
+      setText((prev) =>
         isDeleting
-          ? fullText.substring(0, text.length - 1)
-          : fullText.substring(0, text.length + 1)
+          ? fullText.substring(0, prev.length - 1)
+          : fullText.substring(0, prev.length + 1)
       );
 
       if (!isDeleting && text === fullText) {
         setTimeout(() => setIsDeleting(true), pauseDuration);
       } else if (isDeleting && text === "") {
         setIsDeleting(false);
-        setLoop(loop + 1);
-        setIndex((prevIndex) => (prevIndex + 1) % words.length);
+        loopRef.current += 1;
       }
     };
 
-    const typingInterval = setTimeout(handleType, typingSpeed);
+    const typingTimeout = setTimeout(handleType, typingSpeed);
 
-    return () => clearTimeout(typingInterval);
-  }, [text, isDeleting]);
+    return () => clearTimeout(typingTimeout);
+  }, [text, isDeleting, words, typingSpeed, pauseDuration]);
 
   return text;
 };

@@ -60,6 +60,8 @@ const Skills = () => {
   const skillRefs = useRef([]);
 
   useEffect(() => {
+    const refs = skillRefs.current;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -71,10 +73,10 @@ const Skills = () => {
       { threshold: 0.1 }
     );
 
-    skillRefs.current.forEach((ref) => ref && observer.observe(ref));
+    refs.forEach((ref) => ref && observer.observe(ref));
 
     return () => {
-      skillRefs.current.forEach((ref) => ref && observer.unobserve(ref));
+      refs.forEach((ref) => ref && observer.unobserve(ref));
     };
   }, []);
 
@@ -103,7 +105,6 @@ const Skills = () => {
         </div>
       </div>
 
-      {/* FadeInUp Animation */}
       <style jsx>{`
         @keyframes fadeInUp {
           0% {
