@@ -4,12 +4,48 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
-/* Font */
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }
 
-/* Gradient Animation */
+body {
+  @apply text-white;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #000000 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+  position: relative;
+  z-index: 0;
+}
+
+#__next {
+  position: relative;
+  z-index: 1;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at top left,
+      rgba(0, 198, 255, 0.1),
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(255, 0, 128, 0.1),
+      transparent 70%
+    );
+  pointer-events: none;
+  z-index: 0;
+  animation: gradient 30s ease infinite;
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
@@ -27,7 +63,6 @@
   animation: gradient 15s ease infinite;
 }
 
-/* Text Gradient Animation */
 @keyframes textGradient {
   0% {
     background-position: 0% 50%;
@@ -44,18 +79,16 @@
   animation: textGradient 2s ease-in-out infinite;
 }
 
-/* Custom Animations */
 @keyframes slideIn {
   0% {
     opacity: 0;
-    transform: translateY(-30px); /* More pronounced */
+    transform: translateY(-30px);
   }
   100% {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
 .animate-slideIn {
   animation: slideIn 1s ease-out;
 }
@@ -70,7 +103,6 @@
     transform: translateY(0);
   }
 }
-
 .animate-fadeInUp {
   animation: fadeInUp 0.6s ease-out;
 }
@@ -85,7 +117,6 @@
     transform: translateY(0);
   }
 }
-
 .animate-fadeInDown {
   animation: fadeInDown 1s ease-in-out;
 }
@@ -100,12 +131,10 @@
     transform: translateX(0);
   }
 }
-
 .slide-in-left {
   animation: slideInLeft 0.8s ease-out;
 }
 
-/* Custom Underline Animation */
 .group:hover .group-hover\:w-full {
   width: 100%;
   transition: width 0.3s ease-in-out;

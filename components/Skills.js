@@ -68,48 +68,57 @@ const Skills = () => {
           }
         });
       },
-      {
-        threshold: 0.1,
-      }
+      { threshold: 0.1 }
     );
 
-    skillRefs.current.forEach((ref) => {
-      if (ref) {
-        observer.observe(ref);
-      }
-    });
+    skillRefs.current.forEach((ref) => ref && observer.observe(ref));
 
     return () => {
-      skillRefs.current.forEach((ref) => {
-        if (ref) {
-          observer.unobserve(ref);
-        }
-      });
+      skillRefs.current.forEach((ref) => ref && observer.unobserve(ref));
     };
   }, []);
 
   return (
     <div
       id="skills"
-      className="w-full min-h-screen bg-gradient-to-r from-gray-800 to-black flex flex-col justify-center items-center py-12 px-4"
+      className="w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-950 to-black flex flex-col justify-center items-center py-12 px-4"
     >
-      <h1 className="text-5xl text-white font-extrabold mb-10">Skills</h1>
+      <h1 className="text-5xl text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 font-extrabold mb-10">
+        Skills
+      </h1>
       <div className="container max-w-screen-lg">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 cursor-pointer">
           {skillData.map((skill, index) => (
             <div
               key={skill.name}
               ref={(el) => (skillRefs.current[index] = el)}
-              className="flex flex-col items-center bg-white shadow-lg rounded-lg p-6 opacity-0 transition-opacity duration-500 transform hover:scale-105"
+              className="flex flex-col items-center bg-white/5 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] rounded-2xl p-6 opacity-0 transition-all duration-500 transform hover:scale-105 hover:shadow-[0_12px_40px_rgba(128,0,255,0.8)]"
             >
               {skill.icon}
-              <span className="mt-4 text-lg font-semibold text-center">
+              <span className="mt-4 text-lg font-semibold text-center text-white/90">
                 {skill.name}
               </span>
             </div>
           ))}
         </div>
       </div>
+
+      {/* FadeInUp Animation */}
+      <style jsx>{`
+        @keyframes fadeInUp {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease forwards;
+        }
+      `}</style>
     </div>
   );
 };

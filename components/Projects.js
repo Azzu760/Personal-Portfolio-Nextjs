@@ -1,116 +1,122 @@
 import React, { useState } from "react";
-import { FaGlobe, FaMobileAlt, FaPalette, FaEye } from "react-icons/fa";
+import { FaGlobe, FaMobileAlt, FaEye } from "react-icons/fa";
 
-// Sample project data with GitHub links and dummy thumbnails
+// Sample project data with tech stack
 const projects = [
   {
     id: 1,
-    title: "Dynamic Portfolio Website",
+    title: "ClassroomHive - Virtual Classroom Web App",
     description:
-      "A responsive portfolio website with dynamic content management for showcasing personal projects and achievements.",
-    imageUrl: "/thumbnail.jpg",
+      "ClassroomHive transforms online learning, letting teachers create engaging classes, post assignments and announcements, while students join, submit work, access resources, and collaborate seamlessly.",
+    imageUrl: "/images/classroomHive.png",
     category: "Web Development",
-    githubLink: "https://github.com/yourusername/dynamic-portfolio-website",
+    githubLink: "https://github.com/Azzu760/VirtualClassRoom-Fullstack",
+    techStack: [
+      "React Vite",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Prisma ORM",
+      "TailwindCSS",
+    ],
   },
   {
     id: 2,
-    title: "Mobile Fitness App",
+    title: "Finance Management Mobile Application",
     description:
-      "An interactive fitness app designed for tracking workouts and health metrics, featuring a sleek UI and real-time data analytics.",
-    imageUrl: "/thumbnail.jpg",
+      "The ultimate finance companion! Track your expenses, manage your income, and gain insightful analytics to make smarter financial decisions.",
+    imageUrl: "/images/financeApp.webp",
     category: "Mobile Development",
-    githubLink: "https://github.com/yourusername/mobile-fitness-app",
+    githubLink:
+      "https://github.com/Azzu760/Finance-Management-Mobile-Application",
+    techStack: ["React Native", "Expo", "Firebase", "Context"],
   },
   {
     id: 3,
-    title: "AI-Powered Chatbot",
+    title: "Swyamvar.com - Matrimonial Web App",
     description:
-      "A cutting-edge AI chatbot for customer support, capable of natural language processing and delivering accurate responses in real-time.",
-    imageUrl: "/thumbnail.jpg",
-    category: "UI/UX Design",
-    githubLink: "https://github.com/yourusername/ai-powered-chatbot",
+      "Swyamvar.com brings hearts together! Create your detailed profile, discover compatible matches, and start meaningful conversations to find your perfect life partner.",
+    imageUrl: "/images/matrimonial.webp",
+    category: "Web Development",
+    githubLink:
+      "https://github.com/Azzu760/Swyamvar.com-A-Matrimonial-Web-Application",
+    techStack: [
+      "Next.js",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "Prisma ORM",
+      "Web Socket",
+      "TailwindCSS",
+    ],
   },
   {
     id: 4,
-    title: "E-commerce Platform",
+    title: "Location Based Movie Recommendation System",
     description:
-      "A scalable e-commerce platform with integrated payment gateways and a user-friendly shopping experience, including product recommendations.",
-    imageUrl: "/thumbnail.jpg",
+      "A machine learning-powered movie recommendation system that suggests films tailored to your tastes. Unique feature: it uses your IP address to recommend region-specific movies.",
+    imageUrl: "/images/movieRecommender.webp",
     category: "Web Development",
-    githubLink: "https://github.com/yourusername/e-commerce-platform",
+    githubLink:
+      "https://github.com/Azzu760/Movie-Recommendation-System-Using-Machine-Learning",
+    techStack: [
+      "Python",
+      "Flask",
+      "Machine Learning",
+      "IP Geolocation API",
+      "Google Youtube API",
+    ],
   },
   {
     id: 5,
-    title: "Travel Planner App",
+    title: "Real Time Chat Application Using Socket",
     description:
-      "A travel planner app that helps users organize trips, manage itineraries, and discover attractions based on preferences and location.",
-    imageUrl: "/thumbnail.jpg",
-    category: "Mobile Development",
-    githubLink: "https://github.com/yourusername/travel-planner-app",
+      "Create an account, log in, and chat in real-time with your connections. Seamless instant messaging experience with a user-friendly interface.",
+    imageUrl: "/images/chatApplication.webp",
+    category: "Web Development",
+    githubLink:
+      "https://github.com/Azzu760/Real-Time-Chat-Application-using-Socket.io",
+    techStack: [
+      "React Vite",
+      "Node.js",
+      "Express.js",
+      "Socket.io",
+      "Express",
+      "MongoDB",
+    ],
   },
   {
     id: 6,
-    title: "Interactive Data Dashboard",
+    title: "Algorithm Visualizer Using DSA",
     description:
-      "An interactive data dashboard providing insightful analytics and visualizations for business intelligence and decision-making.",
-    imageUrl: "/thumbnail.jpg",
-    category: "UI/UX Design",
-    githubLink: "https://github.com/yourusername/interactive-data-dashboard",
-  },
-  {
-    id: 7,
-    title: "Blogging Platform",
-    description:
-      "A robust blogging platform with support for multimedia content, user comments, and social media integration for enhanced engagement.",
-    imageUrl: "/thumbnail.jpg",
+      "An interactive tool for visualizing sorting and searching algorithms. Helps users understand algorithmic concepts and performance with dynamic visualizations.",
+    imageUrl: "/images/algorithmVisualizer.png",
     category: "Web Development",
-    githubLink: "https://github.com/yourusername/blogging-platform",
+    githubLink: "https://github.com/Azzu760/Algorithm-Visualizer-DSA",
+    techStack: ["Next.js", "CSS", "DSA", "JavaScript"],
   },
-  {
-    id: 8,
-    title: "Recipe Finder App",
-    description:
-      "A mobile app for discovering and sharing recipes, complete with search functionality, ingredient lists, and cooking instructions.",
-    imageUrl: "/thumbnail.jpg",
-    category: "Mobile Development",
-    githubLink: "https://github.com/yourusername/recipe-finder-app",
-  },
-  {
-    id: 9,
-    title: "Virtual Reality Experience",
-    description:
-      "An immersive virtual reality application designed for interactive experiences and simulations in a variety of environments.",
-    imageUrl: "/thumbnail.jpg",
-    category: "UI/UX Design",
-    githubLink: "https://github.com/yourusername/virtual-reality-experience",
-  },
-  // Add more projects here
 ];
 
 const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-  };
-
-  // Filter options without "Consulting"
   const filterOptions = [
     { name: "All", icon: <FaGlobe /> },
     { name: "Web Development", icon: <FaGlobe /> },
     { name: "Mobile Development", icon: <FaMobileAlt /> },
-    { name: "UI/UX Design", icon: <FaPalette /> },
   ];
 
   return (
     <div
       id="projects"
-      className="w-full min-h-screen bg-gradient-to-r from-gray-800 via-gray-900 to-black py-12 px-6 text-white"
+      className="w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-950 to-black py-16 px-6 text-white"
     >
       {/* Hero Section */}
       <div className="text-center mb-12">
-        <h2 className="text-5xl font-extrabold mb-4">My Projects</h2>
-        <p className="text-lg max-w-2xl mx-auto">
+        <h2 className="text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+          My Projects
+        </h2>
+        <p className="text-gray-300 text-lg max-w-2xl mx-auto">
           Explore my recent projects that demonstrate my skills and expertise.
           Each project showcases different aspects of my work and creativity.
         </p>
@@ -121,11 +127,11 @@ const Projects = () => {
         {filterOptions.map((option) => (
           <button
             key={option.name}
-            onClick={() => handleCategoryChange(option.name)}
-            className={`flex items-center gap-2 px-6 py-2 rounded-lg shadow-lg text-white transition-colors duration-300 ${
+            onClick={() => setSelectedCategory(option.name)}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full border transition-all duration-300 text-sm font-medium ${
               selectedCategory === option.name
-                ? "bg-purple-700 hover:bg-purple-800"
-                : "bg-gray-700 hover:bg-gray-600"
+                ? "bg-purple-600 border-purple-500 text-white shadow-lg"
+                : "bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white"
             }`}
           >
             {option.icon}
@@ -145,29 +151,44 @@ const Projects = () => {
           .map((project) => (
             <div
               key={project.id}
-              className="relative group rounded-lg overflow-hidden bg-gray-800 shadow-lg"
+              className="relative group rounded-3xl overflow-hidden border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.7)] hover:shadow-[0_12px_40px_rgba(128,0,255,0.8)] transition-shadow duration-500"
             >
-              <div className="relative w-full h-48">
+              <div className="relative w-full h-56 overflow-hidden rounded-t-3xl">
                 <img
                   src={project.imageUrl}
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-60 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <a
                     href={project.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 bg-violet-500 text-white font-bold rounded-lg shadow-lg hover:bg-violet-600 transition-colors duration-300 flex items-center gap-2"
+                    className="px-5 py-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
                   >
                     <FaEye />
                     View Project
                   </a>
                 </div>
               </div>
-              <div className="p-4">
-                <h3 className="text-2xl font-semibold">{project.title}</h3>
-                <p className="text-gray-400">{project.description}</p>
+              <div className="p-5">
+                <h3 className="text-2xl font-semibold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">
+                  {project.title}
+                </h3>
+                <p className="text-gray-300 text-sm mb-3">
+                  {project.description}
+                </p>
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {project.techStack.map((tech, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-purple-600 bg-opacity-30 text-purple-300 text-xs font-medium rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

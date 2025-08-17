@@ -11,62 +11,94 @@ const About = () => {
   return (
     <div
       id="about"
-      className="w-full h-screen bg-gray-900 text-white flex flex-col md:flex-row items-center px-6 py-12 relative overflow-hidden"
+      className="relative w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-950 to-black text-white flex items-center justify-center px-4 sm:px-6 md:px-12 py-12 overflow-hidden"
     >
-      {/* Static Background */}
-      <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-gray-800 via-gray-900 to-black opacity-80"></div>
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full">
-        {/* Photo */}
-        <div className="md:w-1/3 flex justify-center mb-8 md:mb-0">
-          <div className="relative group">
-            <div className="w-48 h-48 md:w-72 md:h-72 rounded-full border-4 border-gray-600 transition-transform duration-300 ease-in-out transform group-hover:scale-105 group-hover:shadow-2xl overflow-hidden">
-              <Image
-                src="/myphoto.jpg"
-                alt="AK"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-              />
-            </div>
-            <div className="absolute inset-0 rounded-full border-2 border-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      {/* Parent Container */}
+      <div className="relative z-10 flex flex-col md:flex-row items-center w-full max-w-6xl rounded-3xl overflow-hidden backdrop-blur-3xl bg-gradient-to-br from-blue-900/10 via-purple-900/20 to-black/20 border border-white/20 shadow-[0_12px_60px_rgba(0,0,0,0.7)] hover:shadow-[0_16px_80px_rgba(128,0,255,0.5)] transition-all duration-500">
+        {/* Image Section */}
+        <div className="w-full md:w-1/2 flex justify-center items-center p-6 sm:p-10">
+          <div className="relative w-40 h-40 sm:w-56 sm:h-56 md:w-72 md:h-72 animate-floating rounded-3xl overflow-hidden border border-white/20 shadow-lg hover:scale-105 transition-transform duration-500">
+            <Image
+              src="/myphoto.jpg"
+              alt="AK"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-3xl"
+            />
           </div>
         </div>
 
-        {/* Details */}
-        <div className="md:w-2/3 flex flex-col items-center md:items-start text-center md:text-left">
-          <h2 className="text-5xl font-extrabold mb-4 animate-fadeInDown">
+        {/* Details Section */}
+        <div className="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center space-y-6 animate-slideUp text-center md:text-left">
+          <h2 className="text-5xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-lg">
             About Me
           </h2>
-          <p className="text-lg max-w-3xl mb-6 animate-fadeInUp">
+          <p className="text-base sm:text-lg md:text-xl text-gray-200/90 leading-relaxed">
             I am a passionate developer with experience in various technologies.
             I love solving problems and creating solutions that have a
             meaningful impact.
           </p>
-          <div className="flex flex-col items-left md:items-start mb-6 space-y-2">
-            <h3 className="text-3xl font-semibold mb-2">Contact Information</h3>
-            <p className="flex items-center">
-              <FaEnvelope className="text-xl text-blue-400 mr-3" />{" "}
-              ajaykumarkasaudhan760@gmail.com
+
+          <div className="space-y-3 text-sm sm:text-base">
+            <h3 className="text-xl sm:text-2xl font-semibold text-white/90">
+              Contact Information
+            </h3>
+            <p className="flex items-center justify-center md:justify-start hover:text-blue-400 transition-colors duration-300">
+              <FaEnvelope className="mr-2 sm:mr-3" />{" "}
+              a.k.kasaudhan7600@gmail.com
             </p>
-            <p className="flex items-center">
-              <FaPhone className="text-xl text-green-400 mr-3" /> +91 9569759971
+            <p className="flex items-center justify-center md:justify-start hover:text-green-400 transition-colors duration-300">
+              <FaPhone className="mr-2 sm:mr-3" /> +977 9824408312
             </p>
-            <p className="flex items-center">
-              <FaMapMarkerAlt className="text-xl text-red-400 mr-3" /> KP-10B,
-              Bhubaneswar, Odisha
+            <p className="flex items-center justify-center md:justify-start hover:text-red-400 transition-colors duration-300">
+              <FaMapMarkerAlt className="mr-2 sm:mr-3" /> Koteshwar, Kathmandu,
+              Nepal
             </p>
           </div>
-          <a
-            href="/myresume.pdf"
-            download
-            className="flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:scale-105 transition-transform duration-300 mt-2"
-          >
-            <FaDownload className="mr-2" /> Resume
-          </a>
+
+          <div className="flex justify-center md:justify-start">
+            <a
+              href="/Ajay's Resume.pdf"
+              download
+              className="flex items-center justify-center px-6 py-3 rounded-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white text-base font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+            >
+              <FaDownload className="mr-2" /> Download Resume
+            </a>
+          </div>
         </div>
       </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes floating {
+          0% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-12px);
+          }
+          100% {
+            transform: translateY(0px);
+          }
+        }
+        .animate-floating {
+          animation: floating 4s ease-in-out infinite;
+        }
+
+        @keyframes slideUp {
+          0% {
+            opacity: 0;
+            transform: translateY(40px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-slideUp {
+          animation: slideUp 1s ease forwards;
+        }
+      `}</style>
     </div>
   );
 };

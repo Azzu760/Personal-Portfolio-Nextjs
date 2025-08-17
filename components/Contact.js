@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   FaFacebookF,
   FaTwitter,
@@ -17,6 +17,7 @@ function Contact() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const formRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,16 +31,11 @@ function Contact() {
       });
 
       if (response.ok) {
-        // Clear form fields and set success state
         setName("");
         setEmail("");
         setMessage("");
         setIsSubmitted(true);
-
-        // Refresh the page after 3 seconds
-        setTimeout(() => {
-          window.location.reload(); // Reload the page
-        }, 3000); // Adjust delay as needed
+        setTimeout(() => window.location.reload(), 3000);
       } else {
         console.error("Error submitting feedback:", await response.text());
       }
@@ -48,139 +44,179 @@ function Contact() {
     }
   };
 
-  return (
-    <div id="contact" className="bg-gray-900 text-white py-12 px-4 md:px-10">
-      <div className="container mx-auto text-center">
-        <h1 className="text-5xl font-extrabold mb-4">Contact Me</h1>
-        <h2 className="text-2xl font-semibold mb-4">
-          Let&apos;s Start a Project Together
-        </h2>
-        <p className="text-md mb-8 text-gray-400">
-          We are here to assist you with any queries you may have. Please feel
-          free to reach out to us using the information below or by sending us a
-          message.
-        </p>
+  // Fade-in animation
+  const containerRef = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-fadeUp", "opacity-100");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    if (containerRef.current) observer.observe(containerRef.current);
+    return () => {
+      if (containerRef.current) observer.unobserve(containerRef.current);
+    };
+  }, []);
 
-        <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-8 p-5">
-          {/* Feedback Form */}
-          <div className="w-full md:w-1/2">
-            <h3 className="text-2xl font-bold mb-4">Send Us a Message</h3>
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-                <input
-                  type="hidden"
-                  name="access_key"
-                  value="65d4870c-8df4-4478-abab-cb477d743f3d" // Replace with your actual access key
-                />
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <textarea
-                  name="message"
-                  placeholder="Message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="p-3 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  rows="4"
-                  required
-                ></textarea>
-                <button
-                  type="submit"
-                  className="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded focus:outline-none"
-                >
-                  Send Message
-                </button>
-              </form>
-            ) : (
-              <div className="flex items-center justify-center text-green-400 text-lg">
-                <FaCheckCircle className="text-3xl mr-2" />
-                <span>Thank You!</span>
-              </div>
-            )}
+  return (
+    <div
+      id="contact"
+      className="w-full min-h-screen bg-gradient-to-r from-gray-900 via-gray-950 to-black text-white flex flex-col items-center py-12 px-4"
+    >
+      <h1 className="text-5xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-red-400">
+        Contact Me
+      </h1>
+      <h2 className="text-2xl font-semibold mb-4">
+        Let's Start a Project Together
+      </h2>
+      <p className="text-md mb-12 text-gray-400 text-center max-w-2xl">
+        We are here to assist you with any queries you may have. Feel free to
+        reach out via the contact form or through my social links below.
+      </p>
+
+      <div
+        ref={containerRef}
+        className="flex flex-col md:flex-row gap-12 md:gap-8 w-full max-w-6xl animate-opacity opacity-0"
+      >
+        {/* Form Panel */}
+        <div className="flex-1 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-[0_12px_40px_rgba(128,0,255,0.4)] transition-all">
+          <h3 className="text-2xl font-bold mb-6 text-white">Send a Message</h3>
+          {!isSubmitted ? (
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="flex flex-col space-y-4"
+            >
+              <input
+                type="hidden"
+                name="access_key"
+                value="65d4870c-8df4-4478-abab-cb477d743f3d"
+              />
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="p-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="p-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                required
+              />
+              <textarea
+                name="message"
+                placeholder="Message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="p-3 rounded-xl bg-gray-800 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition"
+                rows="4"
+                required
+              ></textarea>
+              <button
+                type="submit"
+                className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:scale-105 transform transition-all py-3 px-6 rounded-xl font-bold text-white shadow-lg"
+              >
+                Send Message
+              </button>
+            </form>
+          ) : (
+            <div className="flex items-center justify-center text-green-400 text-lg mt-6">
+              <FaCheckCircle className="text-3xl mr-2" /> Thank You!
+            </div>
+          )}
+        </div>
+
+        {/* Info Panel */}
+        <div className="flex-1 bg-white/5 backdrop-blur-xl border border-white/20 rounded-2xl p-8 shadow-lg hover:shadow-[0_12px_40px_rgba(128,0,255,0.4)] transition-all flex flex-col justify-between">
+          <div className="flex flex-col space-y-6 mb-6">
+            <div className="flex items-center space-x-3 text-gray-300">
+              <FaPhoneAlt className="text-green-400 w-5 h-5" />
+              <span>+977 9824408312</span>
+            </div>
+            <div className="flex items-center space-x-3 text-gray-300">
+              <FaEnvelope className="text-yellow-400 w-5 h-5" />
+              <span>a.k.kasaudhan7600@gmail.com</span>
+            </div>
+            <div className="flex items-center space-x-3 text-gray-300">
+              <FaMapMarkerAlt className="text-blue-400 w-5 h-5" />
+              <span>Koteshwar, Kathmandu, Nepal</span>
+            </div>
           </div>
 
-          {/* Personal Details and Social Media Links */}
-          <div className="w-full md:w-1/2">
-            <div className="flex flex-col space-y-4 mb-8">
-              <div className="flex items-center space-x-2 text-gray-300">
-                <FaPhoneAlt className="text-lg text-green-400" />
-                <span className="text-md">+91 9569759971</span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-300">
-                <FaEnvelope className="text-lg text-yellow-400" />
-                <span className="text-md">ajaykumarkasaudhan760@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-300">
-                <FaMapMarkerAlt className="text-lg text-blue-400" />
-                <span className="text-md">751024 KIIT Road, Patia, Odisha</span>
-              </div>
-            </div>
-
-            <div className="flex space-x-4 justify-center md:justify-start">
-              <a
-                href="https://facebook.com/its.me.azzu.760"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
-                className="text-white hover:text-blue-600"
-              >
-                <FaFacebookF className="w-8 h-8 text-blue-600" />
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter"
-                className="text-white hover:text-blue-400"
-              >
-                <FaTwitter className="w-8 h-8 text-blue-400" />
-              </a>
-              <a
-                href="https://linkedin.com/in/ajay-kumar-kasaudhan-baniya-968826236"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="text-white hover:text-blue-700"
-              >
-                <FaLinkedinIn className="w-8 h-8 text-blue-700" />
-              </a>
-              <a
-                href="https://instagram.com/0nly.azzu"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="text-white hover:text-pink-600"
-              >
-                <FaInstagram className="w-8 h-8 text-pink-600" />
-              </a>
-              <a
-                href="https://github.com/Azzu760"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub"
-                className="text-white hover:text-gray-300"
-              >
-                <FaGithub className="w-8 h-8 text-gray-300" />
-              </a>
-            </div>
+          {/* Social Links */}
+          <div className="flex space-x-4 justify-start mt-4">
+            <a
+              href="https://facebook.com/its.me.azzu.760"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-blue-600 transition-colors"
+            >
+              <FaFacebookF className="w-7 h-7" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-blue-400 transition-colors"
+            >
+              <FaTwitter className="w-7 h-7" />
+            </a>
+            <a
+              href="https://linkedin.com/in/ajay-kumar-kasaudhan-baniya-968826236"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-blue-700 transition-colors"
+            >
+              <FaLinkedinIn className="w-7 h-7" />
+            </a>
+            <a
+              href="https://instagram.com/0nly.azzu"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-pink-600 transition-colors"
+            >
+              <FaInstagram className="w-7 h-7" />
+            </a>
+            <a
+              href="https://github.com/Azzu760"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-300 transition-colors"
+            >
+              <FaGithub className="w-7 h-7" />
+            </a>
           </div>
         </div>
       </div>
+
+      {/* Scroll Animations */}
+      <style jsx>{`
+        @keyframes fadeUp {
+          0% {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeUp {
+          animation: fadeUp 0.8s ease forwards;
+        }
+      `}</style>
     </div>
   );
 }
